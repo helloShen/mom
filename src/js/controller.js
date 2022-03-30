@@ -7,9 +7,7 @@ export default (() => {
     const cityObj = Model.Cities.get(cityName);
     const dataObj = await cityObj.getWeatherData();
     if (!dataObj) return;
-    // console.log(JSON.stringify(dataObj));
     const weatherObj = Model.Weather(dataObj);
-    console.log(weatherObj.getCurrent());
     View.showWeather(cityName, weatherObj);
   }
 
