@@ -10,17 +10,19 @@ export default (() => {
       day: 'numeric',
       hour: 'numeric',
       minute: 'numeric',
-      second: 'numeric',
+      // second: 'numeric',
     };
 
     /* Cut the date string into weekday, day, month and year. View module knows how to show them. */
     function formatDate(millisecond) {
       const date = new Date(millisecond);
       const dateStr = date.toLocaleDateString('en-US', options); // Saturday, September 17, 2016
-      const [weekday, monthDay, year, time] = dateStr.split(', ');
+      // eslint-disable-next-line prefer-const
+      let [weekday, monthDay, year, time] = dateStr.split(', ');
       // eslint-disable-next-line prefer-const
       let [month, day] = monthDay.split(' ');
       month = month.slice(0, 3).toUpperCase();
+      time = time.toLowerCase();
       return {
         weekday,
         day,
@@ -52,7 +54,7 @@ export default (() => {
       date: MyDate.formatDate((time + timezoneOffset) * 1000),
       description,
       icon: `http://openweathermap.org/img/wn/${icon}@2x.png`,
-      temperature: Temperature.kelvinToCelsius(temperature),
+      temperature: `${Temperature.kelvinToCelsius(temperature)}℃`,
     };
 
     function getDate() {

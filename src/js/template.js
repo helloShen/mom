@@ -3,31 +3,41 @@ export default (() => {
     const currentTemplate = `
       <div class="current">
         <div class="date">
-          ${weatherObj.getCurrent().getDate().weekday},
-          ${weatherObj.getCurrent().getDate().day},
-          ${weatherObj.getCurrent().getDate().month},
-          ${weatherObj.getCurrent().getDate().year},
+          <div class="weekday">
+            ${weatherObj.getCurrent().getDate().weekday}
+          </div>
+          <div class="dmy">
+            ${weatherObj.getCurrent().getDate().day},
+            ${weatherObj.getCurrent().getDate().month},
+            ${weatherObj.getCurrent().getDate().year}
+          </div>
+        </div>
+        <div class="hero">
+          <div class="icon"><img src="${weatherObj.getCurrent().getIcon()}"/></div>
+          <div class="description">${weatherObj.getCurrent().getDescription()}</div>
+        </div>
+        <div class="temperature">
+          ${weatherObj.getCurrent().getTemperature()}
+        </div>
+        <div class="time">
           ${weatherObj.getCurrent().getDate().time}
         </div>
-        <div class="icon"><img src="${weatherObj.getCurrent().getIcon()}"/></div>
-        <div class="description">${weatherObj.getCurrent().getDescription()}</div>
-        <div class="temperature">${weatherObj.getCurrent().getTemperature()}</div>
       </div>
       `;
-    const start = '<div class="forcast">';
+    const start = '<div class="forcasts">';
     const end = '</div>';
     const forcastTemplate = weatherObj.getForcast().reduce((str, weatherUnit) => `
       ${str}
       <div class="forcast">
         <div class="date">
-          ${weatherUnit.getDate().weekday},
-          ${weatherUnit.getDate().day},
-          ${weatherUnit.getDate().month},
-          ${weatherUnit.getDate().year},
-          ${weatherUnit.getDate().time}
+          <div class="weekday">
+            ${weatherUnit.getDate().weekday.slice(0, 3).toUpperCase()}
+          </div>
+          <div class="dm">
+            ${weatherUnit.getDate().day} ${weatherUnit.getDate().month}
+          </div>
         </div>
         <div class="icon"><img src="${weatherUnit.getIcon()}"/></div>
-        <div class="description">${weatherUnit.getDescription()}</div>
         <div class="temperature">${weatherUnit.getTemperature()}</div>
       </div>
       `, '');
