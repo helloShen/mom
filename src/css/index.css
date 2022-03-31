@@ -1,18 +1,42 @@
 @import './norm.css';
+@import 'https://fonts.googleapis.com/icon?family=Material+Icons';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;400;700&family=Roboto:wght@100;400;500;700&display=swap');
 
 :root {
-  --black: #2f2f2f;
-  --gray: #f5f5f5;
+  --black: #0D0D0D; 
+  --gray-900: #213636;
+  --gray-700: #3F3F40;
+  --gray-500: #736F71;
+  --gray-100: #F2F2F2;
+  --github-gray: #f6f8fa;
+  --shadow: #736F71aa;
   --white: #ffffff;
+  --orange-100: #FF895E;
+  --orange-300: #F27141;    /* main */
+  --orange--500: #A6411C;
+  --pink-orange: #F25252;
+  --red: #F20505;
+  --cray-100: #C4FCEF;
+  --cray-300: #00C9A7;
+  --cray-500: #0CA687;
+  --cray-700: #035948;
+  --green-100: #4EF274;
+  --green-500: #3DA656;
+  --blue-100: #35B2F2;
+  --blue-300: #1C77A6;
+  --purple-100: #C9CCF2;
+  --purple-300: #845EC2;
+  --purple-500: #585DA6;
+  --purple-700: #4A4B59;
 }
 
 body {
   width: 100%;
   min-height: 100vh;
-  background-color: var(--black);
+  background-color: var(--gray-900);
   display: grid;
-  align-items: center;
-  justify-items: center;
+  grid-template-rows: 3rem 1fr 3.5rem;
+  gap: 1rem;
 }
 
 img {
@@ -20,105 +44,147 @@ img {
   height: 100%;
 }
 
-.main {
-  width: 60rem;
-  height: 40rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-}
-
-.city {
-  padding: 2rem;
-  background-color: var(--white);
-  display: grid;
-  grid-template-rows: 1fr 5fr 2fr;
-  gap: 1rem;
-}
-
-.name {
+.container {
   display: grid;
   align-items: center;
   justify-items: center;
+}
+
+.main {
+  width: 54rem;
+  height: 35rem;
+  font-family: 'Poppins' sans-serif;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 2rem 1fr;
+  column-gap: 2rem;
+  row-gap: 1rem;
+}
+
+.mom,
+.me {
   font-size: 2rem;
+  font-weight: 900;
+  color: var(--gray-100);
+  display: grid;
+  align-items: center;
+  justify-items: center;
+}
+
+.city.night {
+  --background: var(--purple-300);
+  --icon-background: var(--purple-300);
+  --font-color: var(--white);
+}
+
+.city.day {
+  --background: var(--cray-300);
+  --icon-background: var(--cray-300);
+  --font-color: var(--gray-900);
+}
+
+.city {
+  width: 26rem;
+  height: 32rem;
+  padding: 2rem;
+  border-radius: .75rem;
+  color: var(--font-color);
+  background-color: var(--background);
+  box-shadow: 1px 1px 4px var(--black);
+  display: grid;
+  grid-template-rows: 1fr 3fr 2fr;
+  gap: 1rem;
+}
+
+.title {
+  color: var(--title-color);
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+}
+
+.title > .date {
+  font-size: .75rem;
+  justify-self: start;
+}
+
+.title > .name {
+  font-weight: 700;
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: .25rem;
+  align-items: center;
+  justify-items: center;
+  font-size: 1.25rem;
+}
+
+.title > .name > .dayNight,
+.title > .name > .dayNight > * {
+  font-size: .75rem;
+  font-weight: 400;
+  display: grid;
+  grid-auto-flow: column;
+  gap: .25rem;
+  align-items: center;
+}
+
+.title > .time {
+  font-size: .75rem;
+  justify-self: end;
 }
 
 .current {
   display: grid;
-  grid-template-rows: 1fr 3fr 1fr 1fr;
+  grid-template-rows: 2fr 1fr;
   gap: .5rem;
-  /* align-content: center; */
-  /* justify-content: center; */
-}
-
-.current > .date {
-  font-size: 1.5rem;
-  display: grid;
-  grid-auto-flow: column;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
 }
 
 .current > .hero {
   display: grid;
-  grid-auto-flow: column;
-  grid-template-columns: 1fr 1fr;
-  justify-content: center;
-  gap: 2rem;
+  grid-template-rows: 1fr 2rem;
+  align-items: center;
+  justify-items: center;
+  gap: .25rem;
 }
 
 .current > .hero > .icon {
   width: 8rem;
   height: 8rem;
-  align-self: center;
-  justify-self: end;
+  background-color: var(--icon-background);
+  border-radius: 4rem;
 }
 
 .current > .hero > .description {
-  font-size: 3rem;
-  align-self: center;
-  justify-self: start;
+  font-family: 'Poppins' sans-serif;
+  font-size: 1rem;
+  font-weight: 900;
 }
 
-.current > .temperature,
-.current > .time {
+.current > .temperature {
+  font-family: 'Poppins' sans-serif;
+  font-size: 2.5rem;
+  font-weight: 100;
   display: grid;
   align-items: center;
   justify-items: center;
 }
 
-.current > .temperature {
-  font-size: 2rem;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .forcasts {
-  font-size: .75rem;
   display: grid;
   grid-auto-flow: column;
   gap: .25rem;
 }
 
 .forcast {
+  font-weight: 700;
   display: grid;
   align-items: center;
   justify-items: center;
 }
 
 .forcast > .date {
+  font-size: .6rem;
   display: grid;
   align-items: center;
   justify-items: center;
@@ -127,4 +193,42 @@ img {
 .forcast .icon {
   width: 2rem;
   height: 2rem;
+  background-color: var(--icon-background);
+  border-radius: 1rem;
+}
+
+.forcast .temperature {
+  font-size: .75rem;
+}
+
+.footer {
+	height: 3rem;
+	width: 100%;
+	font-family: 'Roboto', sans-serif;
+	font-size: 0.75rem;
+	color: var(--gray-100);
+  margin-bottom: .5rem;
+	display: grid;
+	grid-template-rows: repeat(2, 1.5rem);
+	align-items: center;
+	justify-items: center;
+}
+
+.footer .copyright,
+.footer .year {
+	height: 1.5rem;
+	display: grid;
+	grid-auto-flow: column;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.footer a {
+	width: 1rem;
+	height: 1rem;
+}
+
+.footer .github {
+	width: 100%;
+	height: 100%;
 }

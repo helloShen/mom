@@ -1,5 +1,6 @@
 export default (() => {
   const API_KEY = '8f8f2065d814ab45455d6698b7a38459';
+  const API_KEY_2 = '932118092789c3c0ddaac0304dd3c886';
 
   /* Format the date. */
   const MyDate = (() => {
@@ -32,8 +33,31 @@ export default (() => {
       };
     }
 
+    /* night: 6:00 pm - 6:00 am
+     * day: 7:00 am - 17:00 pm */
+    function isNight(time) {
+      const spliterIdx = time.indexOf(':');
+      const hour = parseInt(time.slice(0, spliterIdx), 10);
+      const ap = time.slice(-2, time.length);
+      switch (ap) {
+        case 'am':
+          if (hour < 6) {
+            return true;
+          }
+          return false;
+        case 'pm':
+          if (hour >= 6) {
+            return true;
+          }
+          return false;
+        default:
+          return undefined;
+      }
+    }
+
     return {
       formatDate,
+      isNight,
     };
   })();
 
@@ -46,15 +70,20 @@ export default (() => {
       return Math.floor(k - 273.15);
     }
 
-    return { fahrenheitToCelsius, kelvinToCelsius };
+    return {
+      fahrenheitToCelsius,
+      kelvinToCelsius,
+    };
   })();
 
   const WeatherUnit = (time, timezoneOffset, description, icon, temperature) => {
+    const date = MyDate.formatDate((time + timezoneOffset) * 1000);
     const proto = {
-      date: MyDate.formatDate((time + timezoneOffset) * 1000),
+      date,
       description,
       icon: `http://openweathermap.org/img/wn/${icon}@2x.png`,
       temperature: `${Temperature.kelvinToCelsius(temperature)}℃`,
+      isNight: MyDate.isNight(date.time),
     };
 
     function getDate() {
@@ -73,11 +102,16 @@ export default (() => {
       return proto.temperature;
     }
 
+    function isNight() {
+      return (proto.isNight);
+    }
+
     return {
       getDate,
       getDescription,
       getIcon,
       getTemperature,
+      isNight,
     };
   };
 
@@ -105,7 +139,10 @@ export default (() => {
       return forcast;
     }
 
-    return { getCurrent, getForcast };
+    return {
+      getCurrent,
+      getForcast,
+    };
   };
 
   /* City factory function */
@@ -114,6 +151,7 @@ export default (() => {
     const lon = argLon;
     // const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
     const oneCallUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${API_KEY}`;
+    const oneCallUrl2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${API_KEY_2}`;
 
     /* eslint-disable no-console */
     /* given a city object, return the weather data object */
@@ -134,11 +172,16 @@ export default (() => {
     }
 
     async function getWeatherData() {
-      const weatherData = await getFromUrl(oneCallUrl);
+      let weatherData = await getFromUrl(oneCallUrl);
+      if (!weatherData) {
+        weatherData = await getFromUrl(oneCallUrl2);
+      }
       return weatherData;
     }
 
-    return { getWeatherData };
+    return {
+      getWeatherData,
+    };
   };
 
   const Cities = (() => {
@@ -154,5 +197,8 @@ export default (() => {
     return { get };
   })();
 
-  return { Weather, Cities };
+  return {
+    Weather,
+    Cities,
+  };
 })();
