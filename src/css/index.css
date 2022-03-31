@@ -6,7 +6,7 @@
   --black: #0D0D0D; 
   --gray-900: #213636;
   --gray-700: #3F3F40;
-  --gray-500: #736F71;
+  --gray-500: #D4D4D9;
   --gray-100: #F2F2F2;
   --github-gray: #f6f8fa;
   --shadow: #736F71aa;
@@ -16,18 +16,21 @@
   --orange--500: #A6411C;
   --pink-orange: #F25252;
   --red: #F20505;
-  --cray-100: #C4FCEF;
+  --cray-100: #C7FCEC;
+  --cray-200: #3FD2BA;
   --cray-300: #00C9A7;
-  --cray-500: #0CA687;
+  --cray-500: #00AFA6;
   --cray-700: #035948;
   --green-100: #4EF274;
   --green-500: #3DA656;
   --blue-100: #35B2F2;
   --blue-300: #1C77A6;
   --purple-100: #C9CCF2;
+  --purple-200: #C493FF;
   --purple-300: #845EC2;
   --purple-500: #585DA6;
   --purple-700: #4A4B59;
+  --purple-900: #4B4453;
 }
 
 body {
@@ -73,14 +76,16 @@ img {
 
 .city.night {
   --background: var(--purple-300);
-  --icon-background: var(--purple-300);
-  --font-color: var(--white);
+  --icon-background: var(--purple-200);
+  --font-color: var(--gray-900);
+  --font-color-dimmer: var(--gray-700);
 }
 
 .city.day {
   --background: var(--cray-300);
-  --icon-background: var(--cray-300);
-  --font-color: var(--gray-900);
+  --icon-background: var(--cray-200);
+  --font-color: var(--white);
+  --font-color-dimmer: var(--gray-100);
 }
 
 .city {
@@ -97,7 +102,6 @@ img {
 }
 
 .title {
-  color: var(--title-color);
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: 1fr 1fr 1fr;
@@ -106,6 +110,8 @@ img {
 
 .title > .date {
   font-size: .75rem;
+  font-weight: 500;
+  color: var(--font-color-dimmer);
   justify-self: start;
 }
 
@@ -131,6 +137,8 @@ img {
 
 .title > .time {
   font-size: .75rem;
+  font-weight: 500;
+  color: var(--font-color-dimmer);
   justify-self: end;
 }
 
@@ -163,7 +171,7 @@ img {
 
 .current > .temperature {
   font-family: 'Poppins' sans-serif;
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 100;
   display: grid;
   align-items: center;
