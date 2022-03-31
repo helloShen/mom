@@ -7,7 +7,7 @@ Online Javascript weather app for my mom. Online preview: [ciaoshen.com/mom](htt
 <img src="./src/assets/img/preview.png" width="500">
 
 ## OpenWeather API
-Weather forcast data comes from [OpenWeather API](https://openweathermap.org/api). 
+Weather forcast data (in JSON format) is fetched from [OpenWeather API](https://openweathermap.org/api). 
 
 ## Async JS
 Using ES2017 `async` and `await`.

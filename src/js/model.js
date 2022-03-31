@@ -4,20 +4,27 @@ export default (() => {
 
   /* Format the date. */
   const MyDate = (() => {
-    const options = {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      // second: 'numeric',
-    };
+    function createOptions(timeZone) {
+      return ({
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        // second: 'numeric',
+        timeZone,
+      });
+    }
 
-    /* Cut the date string into weekday, day, month and year. View module knows how to show them. */
-    function formatDate(millisecond) {
+    /* Input millisecond since UNIX epoch to current UTC time.
+     * Input timeZone is a string, ex: "America/Los_Angeles".
+     * "new Date()" will adjust UTC time to local timezone of my computer.
+     * Then use "toLocaleDateString()" function to convert to local time of the target timezone.
+     * Cut the date string into weekday, day, month and year. View module knows how to show them. */
+    function formatDate(millisecond, timeZone) {
       const date = new Date(millisecond);
-      const dateStr = date.toLocaleDateString('en-US', options); // Saturday, September 17, 2016
+      const dateStr = date.toLocaleDateString('en-US', createOptions(timeZone)); // Saturday, September 17, 2016
       // eslint-disable-next-line prefer-const
       let [weekday, monthDay, year, time] = dateStr.split(', ');
       // eslint-disable-next-line prefer-const
@@ -76,8 +83,8 @@ export default (() => {
     };
   })();
 
-  const WeatherUnit = (time, timezoneOffset, description, icon, temperature) => {
-    const date = MyDate.formatDate((time + timezoneOffset) * 1000);
+  const WeatherUnit = (time, timeZone, description, icon, temperature) => {
+    const date = MyDate.formatDate(time * 1000, timeZone);
     const proto = {
       date,
       description,
@@ -118,14 +125,14 @@ export default (() => {
   const Weather = (dataObj) => {
     const current = WeatherUnit(
       dataObj.current.dt,
-      dataObj.timezone_offset,
+      dataObj.timezone,
       dataObj.current.weather[0].main,
       dataObj.current.weather[0].icon,
       dataObj.current.temp,
     );
     const forcast = dataObj.daily.map((day) => WeatherUnit(
       day.dt,
-      dataObj.timezone_offset,
+      dataObj.timezone,
       day.weather[0].main,
       day.weather[0].icon,
       day.temp.day,
@@ -149,9 +156,8 @@ export default (() => {
   const City = (argLat, argLon) => {
     const lat = argLat;
     const lon = argLon;
-    // const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
-    const oneCallUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${API_KEY}`;
-    const oneCallUrl2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${API_KEY_2}`;
+    const oneCallUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${API_KEY}`;
+    const oneCallUrl2 = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,alerts&appid=${API_KEY_2}`;
 
     /* eslint-disable no-console */
     /* given a city object, return the weather data object */

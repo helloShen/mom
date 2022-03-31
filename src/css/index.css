@@ -35,7 +35,7 @@ body {
   min-height: 100vh;
   background-color: var(--gray-900);
   display: grid;
-  grid-template-rows: 3rem 1fr 3.5rem;
+  grid-template-rows: 1rem 1fr 3.5rem;
   gap: 1rem;
 }
 
